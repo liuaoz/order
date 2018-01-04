@@ -35,6 +35,6 @@ public class ProductCategoryServiceImpl implements IProductCategoryService {
 
     @Override
     public List<ProductCategory> findByTypeIn(List<Integer> types) {
-        return productCategoryRepository.findByTypeIn(types);
+        return productCategoryRepository.findByCodeIn(types);
     }
 }

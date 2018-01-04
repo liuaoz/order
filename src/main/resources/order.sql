@@ -6,9 +6,10 @@ CREATE TABLE
   name VARCHAR(64) COMMENT '商品名称',
   price DECIMAL(10,2) DEFAULT '0.00' NOT NULL COMMENT '价格',
   stock INT NOT NULL COMMENT '库存数量',
-  mark VARCHAR(256) COMMENT '商品描述',
+  remark VARCHAR(256) COMMENT '商品描述',
   icon VARCHAR(512) COMMENT '图标',
-  category INT NOT NULL COMMENT '类目编号',
+  category_code INT NOT NULL COMMENT '类目编号',
+  status TINYINT NOT NULL DEFAULT 0 COMMENT '商品状态:0正常;1下架',
   create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON
   UPDATE
@@ -23,13 +24,13 @@ CREATE TABLE
 (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(64) COMMENT '类目名称',
-  type INT NOT NULL COMMENT '类目编号',
+  code INT NOT NULL COMMENT '类目编号',
   create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON
   UPDATE
   CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (id),
-  CONSTRAINT product_category_type_uindex UNIQUE (type)
+  CONSTRAINT uidx_product_category_code UNIQUE (code)
 )
   ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品类目';
 

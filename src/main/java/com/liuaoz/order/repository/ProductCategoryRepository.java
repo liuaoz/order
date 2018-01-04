@@ -6,11 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * @Description : TODO
+ * @Description : 商品类目实体类
  * @Author : matrix
  * @Date : created in 2018/1/3 23:40
  */
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Integer> {
 
-    List<ProductCategory> findByTypeIn(List<Integer> types);
+    List<ProductCategory> findByCodeIn(List<Integer> types);
 }

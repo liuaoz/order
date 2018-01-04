@@ -32,6 +32,6 @@ public class ProductCategory extends BaseEntity{
     /**
      * 类目编号
      */
-    private Integer type;
+    private Integer code;
 
 }
