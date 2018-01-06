@@ -13,6 +13,6 @@ import javax.transaction.Transactional;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
+//@Transactional
 public abstract class BaseTest {
 }

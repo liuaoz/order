@@ -1,5 +1,6 @@
 package com.liuaoz.order.service;
 
+import com.liuaoz.order.dto.CartDto;
 import com.liuaoz.order.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,9 @@ public interface IProductService {
     Product save(Product product);
 
     //TODO 减库存
+    void increaseStock(List<CartDto> cartDtos);
 
     // TODO 加库存
+    void decreaseStock(List<CartDto> cartDtos);
 }
 

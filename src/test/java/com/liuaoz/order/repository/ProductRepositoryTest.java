@@ -33,6 +33,17 @@ public class ProductRepositoryTest extends BaseTest {
     }
 
     @Test
+    public void testUpdate() {
+        Product product = productRepository.findOne("aaaaaaaaaaa");
+
+        product.setIcon("www.sinab.com");
+
+        productRepository.save(product);
+
+
+    }
+
+    @Test
     public void testFindByStatus() {
 
         List<Product> list =
