@@ -22,10 +22,10 @@ public interface IProductService {
 
     Product save(Product product);
 
-    //TODO 减库存
+    //TODO 加库存
     void increaseStock(List<CartDto> cartDtos);
 
-    // TODO 加库存
+    // TODO 减库存
     void decreaseStock(List<CartDto> cartDtos);
 }
 

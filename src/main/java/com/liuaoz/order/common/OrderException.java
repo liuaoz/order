@@ -15,4 +15,9 @@ public class OrderException extends RuntimeException {
         super(resp.getMsg());
         this.code = resp.getStatus();
     }
+
+    public OrderException(Integer cod, String message) {
+        super(message);
+        this.code = code;
+    }
 }

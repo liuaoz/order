@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -130,8 +129,84 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public boolean pay(OrderDto orderDto) {
-        return false;
+    @Transactional
+    public OrderDto cancel(OrderDto orderDto) {
+
+        OrderMaster master = orderMasterRepository.findOne(orderDto.getId());
+
+        if (null == master) {
+            throw new OrderException(RespCode.ORDER_NOT_EXIST);
+        }
+
+        if (!OrderStatusEnum.NEW.getStatus().equals(master.getOrderStatus())) {
+            //若客户端请求的订单状态不是取消，则不能取消订单
+            throw new OrderException(RespCode.ORDER_STATUS_ERROR);
+        }
+
+        master.setOrderStatus(OrderStatusEnum.CANCEL.getStatus());
+
+        //修改订单
+        orderMasterRepository.save(master);
+
+        //返回库存
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(orderDto.getId());
+        if (null == orderDetails) {
+            throw new OrderException(RespCode.ORDER_DETAIL_NOT_EXIST);
+        }
+        List<CartDto> cartDtos = orderDetails.stream().map(e -> new CartDto(e.getProductId(), e.getProductQuantity())).collect(Collectors.toList());
+        iProductService.increaseStock(cartDtos);
+
+        //如果已支付退款
+        if (PayStatusEnum.PAYED.getStatus().equals(master.getPayStatus())) {
+            //TODO
+            log.warn("取消订单，退款功能待实现...");
+        }
+
+        return OrderMaster2OrderDtoConverter.convert(master);
+    }
+
+    @Override
+    public OrderDto finish(OrderDto orderDto) {
+
+        OrderMaster orderMaster = orderMasterRepository.findOne(orderDto.getId());
+
+        if (null == orderMaster) {
+            throw new OrderException(RespCode.ORDER_NOT_EXIST);
+        }
+
+        if (!OrderStatusEnum.NEW.getStatus().equals(orderMaster.getOrderStatus())) {
+            throw new OrderException(RespCode.ORDER_STATUS_ERROR);
+        }
+
+        orderMaster.setOrderStatus(OrderStatusEnum.FINISHED.getStatus());
+
+        orderMasterRepository.save(orderMaster);
+
+        return OrderMaster2OrderDtoConverter.convert(orderMaster);
+    }
+
+    @Override
+    public OrderDto pay(OrderDto orderDto) {
+
+        OrderMaster orderMaster = orderMasterRepository.findOne(orderDto.getId());
+
+        if (null == orderMaster) {
+            throw new OrderException(RespCode.ORDER_NOT_EXIST);
+        }
+
+        if (!OrderStatusEnum.NEW.getStatus().equals(orderMaster.getOrderStatus())) {
+            throw new OrderException(RespCode.ORDER_STATUS_ERROR);
+        }
+
+        if(!PayStatusEnum.UN_PAY.getStatus().equals(orderMaster.getPayStatus())){
+            throw new OrderException(RespCode.ORDER_PAY_STATUS_ERROR);
+        }
+
+        orderMaster.setPayStatus(PayStatusEnum.PAYED.getStatus());
+
+        orderMasterRepository.save(orderMaster);
+
+        return OrderMaster2OrderDtoConverter.convert(orderMaster);
     }
 
 }

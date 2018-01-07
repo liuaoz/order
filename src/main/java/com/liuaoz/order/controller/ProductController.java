@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/product/")
-public class ProductController {
+public class ProductController extends  BaseController{
 }

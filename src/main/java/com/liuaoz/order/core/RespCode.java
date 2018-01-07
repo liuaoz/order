@@ -23,8 +23,14 @@ public enum RespCode {
 
     ORDER_NOT_EXIST(1002, "订单不存在"),
 
-    ORDER_DETAIL_NOT_EXIST(1002, "订单详情不存在");
+    ORDER_DETAIL_NOT_EXIST(1003, "订单详情不存在"),
 
+    ORDER_STATUS_ERROR(1004, "订单状态不正确"),
+
+    ORDER_STATUS_FINISHED(1005, "订单已完成"),
+
+    ORDER_PAY_STATUS_ERROR(1006,"订单支付状态不正确"),
+    ;
 
     private Integer status;
 

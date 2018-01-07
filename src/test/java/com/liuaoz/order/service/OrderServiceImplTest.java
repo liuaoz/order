@@ -1,6 +1,7 @@
 package com.liuaoz.order.service;
 
 import com.liuaoz.order.BaseTest;
+import com.liuaoz.order.common.OrderStatusEnum;
 import com.liuaoz.order.dto.OrderDto;
 import com.liuaoz.order.model.OrderDetail;
 import lombok.extern.slf4j.Slf4j;
@@ -70,4 +71,30 @@ public class OrderServiceImplTest extends BaseTest {
         log.info(orderDtos.getContent().toString());
     }
 
+
+    @Test
+    public void testCancel() throws Exception {
+
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId("151525197329459611");
+        orderDto.setOrderStatus(OrderStatusEnum.CANCEL.getStatus());
+
+        iOrderService.cancel(orderDto);
+
+    }
+
+    @Test
+    public void testFinish() throws Exception {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId("aaa");
+
+        iOrderService.finish(orderDto);
+    }
+
+    @Test
+    public void testPay() throws Exception {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId("aaa");
+        iOrderService.pay(orderDto);
+    }
 }

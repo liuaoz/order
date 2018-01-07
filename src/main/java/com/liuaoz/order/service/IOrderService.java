@@ -37,8 +37,24 @@ public interface IOrderService {
     Page<OrderDto> findList(String buyerOpenid, Pageable pageable);
 
     /**
+     * 取消订单
+     *
+     * @param orderDto
+     * @return
+     */
+    OrderDto cancel(OrderDto orderDto);
+
+    /**
+     * 完成订单
+     *
+     * @param orderDto
+     * @return
+     */
+    OrderDto finish(OrderDto orderDto);
+
+    /**
      * 订单支付
      */
-    boolean pay(OrderDto orderDto);
+    OrderDto pay(OrderDto orderDto);
 
 }
