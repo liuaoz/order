@@ -13,12 +13,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/demo/")
 @Slf4j
-public class Demo {
+public class DemoController {
 
     @RequestMapping("test")
     @ResponseBody
     public String test(){
         log.info("demo test....");
         return "success";
+    }
+
+    @RequestMapping("hot")
+    @ResponseBody
+    public String hot(){
+        log.info("demo hot....");
+        return "success hot wa nnn";
     }
 }

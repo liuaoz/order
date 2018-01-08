@@ -9,10 +9,14 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/orderdb?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+      exclude: WEB-INF/**
 #logging:
 #  pattern:
 #    console: "%d -%msg%n"
 #  file: order.log
 #  level:
 #    com.liuaoz.order.LoggerTest: debug
-
